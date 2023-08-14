@@ -1,5 +1,6 @@
 package sg.edu.rp.c346.id22019575.mymovies;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,10 +11,11 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class EditActivity extends AppCompatActivity {
-    Button btnUpdate, btnDelete;
+    Button btnUpdate, btnDelete, btnCancel;
     Spinner spinner;
     EditText etYear, etSingers, etTitle;
     Movie data;
@@ -31,6 +33,7 @@ public class EditActivity extends AppCompatActivity {
         etTitle = findViewById(R.id.title2);
         etYear = findViewById(R.id.year);
         tvId = findViewById(R.id.id);
+        btnCancel = findViewById(R.id.button2);
 
         Intent i = getIntent();
         data = (Movie) i.getSerializableExtra("data");
@@ -68,11 +71,55 @@ public class EditActivity extends AppCompatActivity {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DBHelper dbh = new DBHelper(EditActivity.this);
-                dbh.deleteNote(data.get_id());
 
-                finish();
+                AlertDialog.Builder myBuilder = new AlertDialog.Builder(EditActivity.this);
+
+                myBuilder.setTitle("Danger");
+                myBuilder.setMessage("Are you sure you want to delete the movie "+data.getTitle());
+                myBuilder.setCancelable(false);
+
+                //Configure the 'positive' button
+                myBuilder.setPositiveButton("DELETE", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DBHelper dbh = new DBHelper(EditActivity.this);
+                        dbh.deleteNote(data.get_id());
+
+                        finish();
+                    }
+                });
+
+                //Configure the 'neutral' button
+                myBuilder.setNeutralButton("Cancel", null);
+                AlertDialog myDialog = myBuilder.create();
+                myDialog.show();
             }
         });
+
+        btnCancel.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+
+                AlertDialog.Builder myBuilder = new AlertDialog.Builder(MainActivity.this);
+
+                myBuilder.setTitle("Danger");
+                myBuilder.setMessage("Are you sure you want to discard the changes");
+                myBuilder.setCancelable(false);
+
+                //Configure the 'positive' button
+                myBuilder.setPositiveButton("DISCARD", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+
+                //Configure the 'neutral' button
+                myBuilder.setNeutralButton("DO NOT DISCARD", null);
+                AlertDialog myDialog = myBuilder.create();
+                myDialog.show();
+            }
+        });
+
     }
 }
