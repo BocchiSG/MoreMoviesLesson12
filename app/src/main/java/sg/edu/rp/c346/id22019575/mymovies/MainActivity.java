@@ -50,34 +50,30 @@ public class MainActivity extends AppCompatActivity {
         btnInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Create the DBHelper object, passing in the
-                // activity's Context
                 DBHelper db = new DBHelper(MainActivity.this);
 
-                // Insert a task
-                String task = etTitle.getText().toString();
-                int date = Integer.parseInt(etYear.getText().toString());
-                String singers = etGenre.getText().toString();
-                int rating = Integer.parseInt(rate.toString());
+                String title = etTitle.getText().toString();
+                String genre = etGenre.getText().toString();
+                int year = Integer.parseInt(etYear.getText().toString());
+                String rating = rate.getSelectedItem().toString();
 
-                db.insertTask(task, date, singers, rating);
+                // Insert the movie into the database
+                db.insertTask(title, year, genre, Integer.parseInt(rating));
                 db.close();
 
-
-
+                // Update the ArrayList with the new movie
+                Movie newMovie = new Movie(al.size() + 1, title, genre, year, Integer.parseInt(rating));
+                al.add(newMovie);
+                aa.notifyDataSetChanged(); // Notify the adapter about the data change
             }
         });
 
         btnShowList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Movie target = al.get(0);
-
-                Intent i = new Intent(MainActivity.this,
-                        ListviewActivity.class);
-                i.putExtra("data", (CharSequence) target);
+                Intent i = new Intent(MainActivity.this, ListviewActivity.class);
+                i.putExtra("data", al); // al is an ArrayList<Movie>
                 startActivity(i);
-
             }
         });
 

@@ -56,17 +56,17 @@ public class CustomAdapter extends ArrayAdapter {
         int yellow = Color.rgb(255,255,0);
         tvTitle.setTextColor(pink);
         tvYear.setTextColor(cyan);
-        if (current.getRate() == 'PG13') {
+        if ("PG13".equals(current.getRate())) {
             ivGender.setImageResource(R.drawable.img);
-        } else if (current.getRate() == 'G') {
+        } else if ("G".equals(current.getRate())) {
             ivGender.setImageResource(R.drawable.img_1);
-        }else if (current.getRate() == 'PG') {
+        } else if ("PG".equals(current.getRate())) {
             ivGender.setImageResource(R.drawable.img_2);
-        }else if (current.getRate() == 'NC16') {
+        } else if ("NC16".equals(current.getRate())) {
             ivGender.setImageResource(R.drawable.img_3);
-        }else if (current.getRate() == 'M18') {
+        } else if ("M18".equals(current.getRate())) {
             ivGender.setImageResource(R.drawable.img_4);
-        }else if (current.getRate() == 'R21') {
+        } else if ("R21".equals(current.getRate())) {
             ivGender.setImageResource(R.drawable.img_5);
         }
         tvSingers.setTextColor(red);

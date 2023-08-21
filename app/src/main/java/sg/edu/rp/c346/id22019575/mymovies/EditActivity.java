@@ -47,7 +47,7 @@ public class EditActivity extends AppCompatActivity {
             if (view instanceof RadioButton) {
                 RadioButton radioButton = (RadioButton) view;
                 int radioButtonStars = Integer.parseInt(radioButton.getText().toString());
-                if (data.getRate() == radioButtonStars) {
+                if (data.getRate() == Integer.parseInt(radioButton.getText().toString())) {
                     radioButton.setChecked(true);
                     break; // Once the matching radio button is found and selected, exit the loop
                 }
@@ -100,7 +100,7 @@ public class EditActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                AlertDialog.Builder myBuilder = new AlertDialog.Builder(MainActivity.this);
+                AlertDialog.Builder myBuilder = new AlertDialog.Builder(EditActivity.this);
 
                 myBuilder.setTitle("Danger");
                 myBuilder.setMessage("Are you sure you want to discard the changes");
